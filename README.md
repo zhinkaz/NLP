@@ -1,2 +1,225 @@
-# NLP
-Init in NLP
+# Entrevista Search
+
+En la corte suprema de Chile se tratan diversos casos, sin embargo, es natural que casos recientes se parezcan a otros casos dentro del historial (+30 años), para agilizar los procesos tanto de ministros, relatores, abogados, entre otros, se tiene la idea de que existe tecnología suficiente para crear un buscador de jurisprudencia. En la búsqueda de expertos (as) en tecnología llegamos a ti!, esperamos que nos puedas ayudar con los siguientes problemas:
+
+1. Plantear una solución que permita mejorar los procesos actuales de los usuarios
+2. Plantear formas de evaluar la solución
+3. Implementar solución
+4. Plantear alcances y pasos futuros
+
+Para esto se adjuntan datos correspondientes a sentencias en `data/sentencias.jsonl` junto con un ejemplo de cómo leer los datos en `notebooks/Solution.ipynb`, un ejemplo de sentencia y metadata es el siguiente:
+
+```python
+{'categorias': ['Migración y Extranjería',
+                'Visa o permiso',
+                'Requisitos del recurso de protección',
+                'Cédula de identidad para extranjeros',
+                'Plazo de seis meses',
+                'Plazo razonable',
+                'Principio de colaboración',
+                'Principio de cooperación',
+                'Situación migratoria regular',
+                'Servicio nacional de migraciones',
+                'Omisión de pronunciamiento de solicitud de permanencia '
+                'definitiva',
+                'Solicitud de visa en trámite',
+                'Migración y extranjería',
+                'No existen hechos que constituyan vulneración de garantías '
+                'constitucionales',
+                'Procedimiento reglado',
+                'Vigencia de cédula de identidad',
+                'Plazo no fatal para la administración'],
+ 'enlace_buscador': 'https://juris.pjud.cl/busqueda/pagina_detalle_sentencia/?k=Y2ZkcHZnTTN4c2l0TXplTkNpQ2F1Zz09',
+ 'enlace_sentencia': 'https://juris.pjud.cl/busqueda/u?cql20',
+ 'materia': '',
+ 'resultado_recurso': 'REVOCADA SENTENCIA APELADA QUE',
+ 'rol': '170550-2022',
+ 'sala': 'TERCERA, CONSTITUCIONAL',
+ 'sentencia': 'Santiago, diez de mayo de dos mil veintitrés.Vistos:Se '
+              'reproduce el fallo en alzada, con excepción de los fundamentos '
+              'que razonan en el sentido de acoger el recurso de protección, '
+              'los que se eliminan.Y se tiene en su lugar, y además, '
+              'presente:Primero: Que la presente acción constitucional de '
+              'protección dirigida en contra del Servicio Nacional de '
+              'Migraciones, se interpone por la omisión en que habría '
+              'incurrido el servicio referido, respecto de su solicitud de '
+              'permane...',
+ 'submateria': '',
+ 'text': 'Se reproduce el fallo en alzada, con excepción de los fundamentos '
+         'que razonan en el sentido de acoger el recurso de protección, los '
+         'que se eliminan.  Y se tiene en su lugar, y además, presente:  '
+         'Primero: Que la presente acción constitucional de protección '
+         'dirigida en contra del Servicio Nacional de Migraciones, se '
+         'interpone por la omisión en que habría incurrido el servicio '
+         'referido, respecto de su solicitud de permanencia definitiva. Pide, '
+         'en definitiva, ordenar al recurrido que se pronuncie sobre la '
+         'solicitud presentada y que se adopten las medidas necesarias para '
+         'restablecer el imperio del derecho, con costas.  Segundo: Que la '
+         'acción de protección de garantías constitucionales, procede ante una '
+         'actuación arbitraria o ilegal que amenace, prive o perturbe un '
+         'derecho protegido por la Carta Fundamental . De esta forma, resulta '
+         'indispensable no sólo la existencia de un derecho cierto y '
+         'determinado por parte de quien ejerce la acción cautelar, sino que '
+         'también, un actuar arbitrario del recurrido que amague y vulnere tal '
+         'derecho, pues de no existir este perjuicio o amenaza, no se '
+         'configuran los presupuestos que ameritan la adopción de medidas '
+         'urgentes de cautela, que es el objetivo de esta vía excepcional. En '
+         'otras palabras, la cuestión a resolver será si la demora del '
+         'Servicio Nacional de Migraciones afecta los derechos de la parte '
+         'recurrente.  Tercero: Que, siguiendo la misma línea de razonamiento, '
+         'la parte recurrente ha centrado su acción en que la situación ya '
+         'descrita, le afecta su derecho a la vida e integridad física y '
+         'síquica, pues se le mantiene en un estado de permanente angustia y '
+         'desesperación al no poder ejercer prácticamente ningún derecho '
+         'constitucional, además de su igualdad ante la ley, habiendo '
+         'transcurrido el plazo del artículo 27 de la Ley N°19.880.  Cuarto: '
+         'Que si bien de los antecedentes que obran en autos, es posible '
+         'desprender que el Servicio recurrido no se ha pronunciado sobre la '
+         'solicitud de permanencia definitiva del recurrente, al menos a la '
+         'fecha de interposición de la presente acción, lo cierto es que ha '
+         'resultado acreditado que tal requerimiento se encuentra sometido a '
+         'un procedimiento uniforme y previamente establecido por el órgano, '
+         'para el conocimiento, tramitación y resolución del mismo.  En '
+         'efecto, consta de los antecedentes que el 24 de noviembre de 2021, '
+         'se dictó la Circular N°12, que establece etapas del trámite del '
+         'beneficio migratorio de permanencia definitiva. Luego, el recurrido '
+         'ha explicado que la petición de marras se encuentra en etapa de '
+         '¿Estudio Preliminar¿, lo que incluye: a) la verificación de '
+         'cumplimiento normativo para acceder al beneficio impetrado, junto al '
+         'estudio en el que se revisa el cumplimiento de plazos de acuerdo a '
+         'la actual normativa legal vigente y, b) la realización del estudio '
+         'preliminar de toda la documentación en general y particular de las '
+         'solicitudes.  El estado de esta solicitud puede verificarse por el '
+         'interesado, en la plataforma en línea, que el Servicio recurrido ha '
+         'dispuesto para ello.  Quinto: Que este Tribunal tras realizar un '
+         'acabado estudio de la normativa que regula la materia y del estado '
+         'actual en que se desenvuelve esta discusión, estima que debe '
+         'precisarse que existió un cambio de legislación reciente en esta '
+         'materia, pues de estar regida por el Decreto Ley N°1094 y su '
+         'Reglamento, actualmente se encuentra sometida a la Ley N°21.325 y al '
+         'Decreto Supremo N°296 del Ministerio de Interior y Seguridad Pública '
+         'que contiene el Reglamento de la misma. Sobre la vigencia de esta '
+         'nueva normativa, el artículo Undécimo transitorio de la Ley N°21.325 '
+         'dispuso que: ¿Esta ley entrará en vigencia una vez publicado su '
+         'reglamento.¿ Por su parte, el Decreto Supremo ya aludido fue '
+         'publicado el 12 de febrero del año 2022, fecha ésta desde la cual ha '
+         'cobrado vigencia este nuevo régimen.  Sexto: Que, este cambio de '
+         'legislación, se ocupó de una de las grandes problemáticas que afecta '
+         'a los extranjeros que se encuentran tramitando los beneficios '
+         'migratorios como el de autos. Esta problemática dice relación con la '
+         'pérdida de vigencia de las cédulas de identidad para extranjeros '
+         'antes que se obtenga un pronunciamiento de la autoridad '
+         'administrativa respecto del permiso migratorio. Así, el artículo 43 '
+         'de la Ley N°21.325, prevé lo siguiente: ¿Cédula de identidad. Los '
+         'residentes temporales y definitivos deberán solicitar cédula de '
+         'identidad ante el Servicio de Registro Civil e Identificación, '
+         'dentro del plazo de treinta días, contado desde la fecha de entrada '
+         'en vigencia del respectivo permiso de residencia.  El Servicio '
+         'tendrá acceso a la información actualizada de las cédulas de '
+         'identidad que el Servicio de Registro Civil e Identificación haya '
+         'otorgado a los residentes, con la identificación completa, '
+         'nacionalidad, fecha de nacimiento y número de cédula y vigencia '
+         'respectiva.  La cédula de identidad que se otorgue en virtud de este '
+         'artículo deberá expedirse de conformidad con los nombres y apellidos '
+         'y plazo de vigencia que registre el permiso de residencia '
+         'respectivo.  Se entenderá que la cédula de identidad mantiene su '
+         'vigencia, siempre y cuando el extranjero acredite que cuenta con un '
+         'certificado de residencia en trámite vigente o hasta que la '
+         'autoridad migratoria resuelva la respectiva solicitud.¿  Séptimo: '
+         'Que, tanto del tenor del recurso como de los conocimientos que '
+         'emanan de las máximas de la experiencia, es posible concluir que el '
+         'único documento oficial cuya falta de vigencia puede obstar al '
+         'desarrollo de la vida cotidiana en el país, es la cédula de '
+         'identidad. Por ende, si la nueva ley ha contemplado una norma '
+         'específica, que determina la mantención de la vigencia, de pleno '
+         'derecho, de tal instrumento, mientras se tramita la solicitud sobre '
+         'la situación migratoria del extranjero, no puede existir '
+         'perturbación alguna, ni siquiera en grado de amenaza, por el hecho '
+         'que el Servicio tarde más de seis meses en tramitar la petición '
+         'respectiva, pues no resulta efectivo que el extranjero esté impedido '
+         'de realizar trámites esenciales con su cédula de identidad ante '
+         'cualquier entidad pública o privada. Evidentemente, la conclusión '
+         'antes dicha, se refiere a un extranjero en situación regular en el '
+         'país.  Octavo: Que, además, en relación a la posibilidad de ingreso '
+         'y egreso del territorio nacional, el artículo 38 de la Ley N°21.325 '
+         'establece que: ¿No habrá límite al número de ingresos y egresos del '
+         'territorio nacional que pueden efectuar los extranjeros residentes, '
+         'en tanto esté vigente el permiso de residencia respectivo y se '
+         'cumplan los requisitos que exigen esta ley y su reglamento.  Si el '
+         'extranjero residente hubiere solicitado el cambio o prórroga de su '
+         'permiso de residencia temporal o hubiere solicitado el permiso de '
+         'residencia definitiva, y acredita que cuenta con un certificado de '
+         'residencia en trámite vigente, no tendrá limitaciones al número de '
+         'ingresos y egresos del territorio nacional, aun cuando el permiso de '
+         'residencia que posea no se encuentre vigente.¿  Este precepto, viene '
+         'a corroborar lo razonado en los motivos precedentes, en cuanto a '
+         'que, no ha quedado demostrado que la parte solicitante sufra alguna '
+         'vulneración en sus derechos garantizados por la Constitución '
+         'Política de la República y amparados por la acción de protección, '
+         'por el mero hecho de no existir pronunciamiento sobre su solicitud '
+         'de permanencia definitiva.  Noveno: Que, asimismo, en la presente '
+         'causa no existe discusión acerca del hecho que la parte recurrente '
+         'se encuentra en situación migratoria regular, sin que exista una '
+         'orden de expulsión u otra similar en su contra.  Décimo: Que, sin '
+         'perjuicio de lo razonado hasta acá, esta Corte se hará cargo de la '
+         'alegación de la parte recurrente en relación a haberse transgredido '
+         'el artículo 27 de la Ley N°19.880, al haber transcurrido más de seis '
+         'meses sin que el Servicio recurrido emita pronunciamiento. Sobre el '
+         'particular, debe aclararse que lo que ha dicho esta Corte en '
+         'relación a este plazo, es que el mismo no es fatal y que debe '
+         'interpretarse la norma en el sentido que obliga a la Administración '
+         'a pronunciarse o concluir un procedimiento en un plazo razonable. En '
+         'este sentido, el Servicio Nacional de Migraciones debe pronunciarse '
+         'en un plazo razonable a fin de evitar mantener en la incertidumbre a '
+         'los peticionarios.  Undécimo: Que, igualmente, no deja de advertir '
+         'esta Corte Suprema, tal como lo señala el Servicio recurrido en su '
+         'presentación de diez de enero del año dos mil veintitrés, que existe '
+         'una problemática que se ha mantenido no obstante la claridad del '
+         'artículo 43 de la Ley N°21.325, y que se materializa en las '
+         'dificultades que, otros órganos públicos y/o privados, colocan a los '
+         'extranjeros en la situación de espera de pronunciamiento del '
+         'beneficio de permanencia definitiva, cuestión que legitima '
+         'pasivamente a dichas entidades para ser objeto de esta acción, y no '
+         'al Servicio recurrido. Sin embargo, atendido el principio de '
+         'colaboración o cooperación que debe existir entre los organismos '
+         'públicos, es que esta Corte ordenará en lo resolutivo, que esta '
+         'sentencia sea puesta en conocimiento del Servicio de Registro Civil '
+         'e Identificación, de la Superintendencia de Salud, del Fondo '
+         'Nacional de Salud, de la Comisión para el Mercado Financiero, de la '
+         'Administradora del Fondo de Cesantía y de la Dirección del Trabajo, '
+         'quienes deberán distribuirlo entre sus reparticiones y/o entidades '
+         'fiscalizadas, según corresponda.  Duodécimo: Que, en consecuencia, '
+         'habiéndose acreditado que la demora del Servicio Nacional de '
+         'Migraciones se debe a la tramitación de un procedimiento reglado, '
+         'que consta de diversas etapas, y que dicha tramitación no ha '
+         'vulnerado los derechos denunciados por el recurrente ni aún en grado '
+         'de amenaza, deberá revocarse lo resuelto y desestimarse la acción, '
+         'sin perjuicio que el recurrido deberá emitir pronunciamiento en un '
+         'plazo razonable de conformidad con los principios que le impone su '
+         'reglamentación en el artículo 37 de la Ley N°21.325 y en el artículo '
+         '46 de su Reglamento contenido en el Decreto Supremo N°296 de 2022.  '
+         'Por estas consideraciones y de conformidad, además, con lo prevenido '
+         'en el artículo 20 de la Constitución Política de la República y Auto '
+         'Acordado de esta Corte sobre la materia, se revoca la sentencia '
+         'apelada y, en su lugar, se declara que se rechaza el recurso de '
+         'protección interpuesto en autos.  Sin perjuicio de lo resuelto, se '
+         'hace presente al recurrido que debe emitir pronunciamiento dentro de '
+         'un plazo razonable. Asimismo, se ordenar remitir copia de esta '
+         'sentencia a los organismos indicados en el considerando Undécimo y '
+         'para los fines que se indicaron en dicho motivo.  Regístrese y '
+         'devuélvase.  Rol Nº 170.550-2022.  Pronunciado por la Tercera Sala '
+         'de esta Corte Suprema integrada por los Ministros Sra. Angela '
+         'Vivanco M., Sr. Mario Carroza E., Sr. Jean Pierre Matus A. y los '
+         'Abogados Integrantes Sr. Diego Munita L. y el Sr. Gonzalo Ruz L. '
+         'Santiago, 10 de mayo de 2023.  Autoriza el Ministro de Fe de la '
+         'Excma. Corte Suprema.  En Santiago, a diez de mayo de dos mil '
+         'veintitrés, notifiqué en Secretaría por el Estado Diario la '
+         'resolución '
+         'precedente.                                                                                                                             '
+         'Normas relevantes LEY 19880 Art. 27 LEY 21325 Art. 37 Art. 38 Art. '
+         '43 Art. undécimo transitorio  Art. 46  Normas mencionadas  Puede '
+         'buscar otras normas aquí',
+ 'tipo_recurso': '(CIVIL) APELACIÓN PROTECCIÓN',
+ 'titulo': 'DUEÑAS/SERVICIO NACIONAL DE MIGRACIONES'}
+
+```
